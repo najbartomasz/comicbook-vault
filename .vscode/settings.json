@@ -40,5 +40,9 @@
     },
     "[yaml]": {
         "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "sonarlint.connectedMode.project": {
+        "connectionId": "najbartomasz-github",
+        "projectKey": "najbartomasz_comicbook-vault"
     }
 }

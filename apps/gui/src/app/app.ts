@@ -5,8 +5,7 @@ import { NxWelcome } from './nx-welcome';
 @Component({
     imports: [NxWelcome, RouterModule],
     selector: 'app-root',
-    templateUrl: './app.html',
-    styleUrl: './app.scss',
+    templateUrl: './app.html'
 })
 export class App {
     protected title = 'gui';
