@@ -77,11 +77,8 @@
         },
         "test": {
             "executor": "@nx/vite:test",
-            "outputs": [
-                "{options.reportsDirectory}"
-            ],
             "options": {
-                "reportsDirectory": "../../coverage/apps/gui"
+                "coverage": true
             }
         },
         "serve-static": {
