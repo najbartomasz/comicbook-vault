@@ -1,0 +1,44 @@
+{
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "always",
+        "source.organizeImports": "always",
+        "source.addMissingImports.ts": "always"
+    },
+    "editor.defaultFormatter": "vscode.json-language-features",
+    "editor.formatOnSave": true,
+    "editor.rulers": [
+        140
+    ],
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features",
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "typescript.suggest.enabled": true,
+    "typescript.format.enable": true,
+    "typescript.validate.enable": true,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "typescript.updateImportsOnPaste.enabled": true,
+    "typescript.preferences.quoteStyle": "single",
+    "typescript.preferences.organizeImports": {
+        "sortImports": true,
+        "removeUnusedImports": true
+    },
+    "[ignore]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    }
+}
