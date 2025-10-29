@@ -77,6 +77,9 @@
         },
         "test": {
             "executor": "@nx/vite:test",
+            "outputs": [
+                "{workspaceRoot}/coverage/apps/gui"
+            ],
             "options": {
                 "coverage": true
             }

@@ -23,13 +23,13 @@ export default defineConfig(() => ({
         coverage: {
             reportsDirectory: '../../coverage/apps/gui',
             provider: 'v8' as const,
-            reporter: ['text', 'html'],
-            exclude: [
-                '**/*.spec.ts',
-                'src/test-setup.ts',
-                'eslint.config.mjs',
-                'vite.config.mts'
-            ]
+            reporter: ['text', 'html', 'lcov'],
+            thresholds: {
+                lines: 100,
+                functions: 100,
+                branches: 100,
+                statements: 100
+            }
         }
     },
 }));
