@@ -2,7 +2,7 @@
     "name": "gui-e2e",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "projectType": "application",
-    "sourceRoot": "apps/gui-e2e/src",
+    "sourceRoot": "tests/gui-e2e/src",
     "implicitDependencies": [
         "gui"
     ],
