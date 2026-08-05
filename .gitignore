@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# NX
+.nx/cache
+.nx/workspace-data
+
+# Build outputs
+dist/
+
+# Logs
+npm-debug.log*
+
+# VS Code
+.vscode/*
+!.vscode/settings.json
+
+# OS
+Thumbs.db
