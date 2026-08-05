@@ -1,0 +1,24 @@
+{
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": true,
+    "editor.rulers": [140],
+    "editor.tabSize": 4,
+    "files.eol": "\n",
+    "files.exclude": {
+        "**/.nx": true,
+        "**/dist": true,
+        "**/node_modules": true
+    },
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "files.watcherExclude": {
+        "**/.nx/**": true,
+        "**/dist/**": true,
+        "**/node_modules/**": true
+    },
+    "github.copilot.chat.commitMessageGeneration.instructions": [
+        {
+            "file": ".github/instructions/commit-message.instructions.md"
+        }
+    ]
+}
