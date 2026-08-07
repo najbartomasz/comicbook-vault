@@ -12,9 +12,12 @@
 <State the decision clearly, in active voice: "I will…". One crisp paragraph.>
 
 ### <Optional Sub-topic>
+
 **<Bold summary line>**
+
 - <Key characteristic 1>
 - <Key characteristic 2>
+
 <Closing sentence.>
 
 ## Consequences

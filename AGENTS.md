@@ -63,13 +63,15 @@ The workspace lints at `strictTypeChecked` + `stylisticTypeChecked`. These are n
 
 Prettier owns all formatting; never hand-format or add formatting rules to ESLint. Config is `.prettierrc`: 4 spaces, single quotes, semicolons, no trailing commas, 140-column width, LF endings.
 
-`docs/` and `.github/instructions/` are Prettier-ignored hand-authored prose (`.prettierignore`). Do not reflow them.
+This includes Markdown. `.prettierignore` exempts only generated files and build output, so every hand-authored document — `AGENTS.md`, ADRs, plans, instruction files — is formatted. Prose is safe: `proseWrap: "preserve"` means Prettier never rewraps a paragraph or moves a line break. It normalizes block spacing, emphasis markers, and table alignment, and it pads table cells to the widest cell in each column.
+
+One Markdown trap worth knowing, because it silently changes rendering: a non-blank line directly after a list item is absorbed into that item by CommonMark lazy continuation. A closing sentence following a bullet list needs a blank line before it, or it renders as part of the last bullet. `docs/adr/TEMPLATE.md` shows the correct shape.
 
 ## Commits
 
 Conventional Commits, per [ADR-0001](docs/adr/0001-conventional-commits.md). The full rules — types, scopes, 50-character summary, mandatory prose body wrapped at 72 characters — are in [`.github/instructions/commit-message.instructions.md`](.github/instructions/commit-message.instructions.md). Read that file before writing a commit message.
 
-Two rules agents get wrong most often: the body must explain _why_ in prose with no bullet lists, and **no co-author or AI attribution trailers** — this is a single-maintainer project.
+`.husky/commit-msg` runs commitlint, so a malformed message is rejected. Three rules agents get wrong most often: the header is capped at 50 characters **including** the `type(scope): ` prefix and must name a single action, so never join facets with "and"; the header must be entirely lower-case, so write `eslint` and `nestjs` rather than `ESLint` and `NestJS`; and the body must explain _why_ in prose with no bullet lists. Also **no co-author or AI attribution trailers** — this is a single-maintainer project.
 
 ## Documentation
 

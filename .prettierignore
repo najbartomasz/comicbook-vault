@@ -1,0 +1,11 @@
+# Generated and vendored
+package-lock.json
+node_modules/
+
+# Build outputs and caches
+dist/
+.angular/
+.nx/
+coverage/
+test-output/
+__screenshots__/
