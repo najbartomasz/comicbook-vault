@@ -4,148 +4,114 @@ description: 'Commit message rules for comicbook-vault (Conventional Commits + g
 
 # Commit Message Generation Instructions
 
-Apply these rules to every commit in this repository. Rationale: [ADR-0001](../../docs/adr/0001-conventional-commits.md).
+Rationale: [ADR-0001](../../docs/adr/0001-conventional-commits.md). `.husky/commit-msg` runs commitlint, so a message that breaks any rule below is rejected outright.
 
-## Required Structure
+## The Four Rules That Fail Commits
+
+1. **Summary: six words maximum**, or five when the scope names a project. The 50-character limit counts `type(scope): ` too, and `feat(gui-server): ` alone eats 18 of it. Counting words is reliable; counting characters while writing is not.
+2. **Header: no capital letters anywhere**, including product names and acronyms — `eslint`, `nestjs`, `typescript`, `api`. Correct spelling belongs in the body, where case is unconstrained.
+3. **Body: break the line every 10 to 12 words.** The 72-character limit applies to every physical line, so the body must contain literal line breaks. Commitlint measures raw text and never rewraps.
+4. **Footer: omit it** unless there is a real issue number or breaking change. Never write `No issue references`, `No breaking changes`, or `Refs: none`; commitlint rejects them. Most commits simply end after the body.
+
+## Shape
 
 ```text
 <type>(<scope>): <summary>
 
-<body: why the change was made>
-
-<footer>
+<body: why the change was needed>
 ```
 
-- Summary and body are mandatory. Scope and footer are optional.
-- Exactly one blank line between summary, body, and footer.
+Add a footer only when it carries real information:
 
-## Type
+```text
+<type>(<scope>)!: <summary>
 
-| Type | Use for |
-| --- | --- |
-| `feat` | New user-facing capability |
-| `fix` | Correcting broken behavior |
-| `docs` | Markdown, ADRs, comments only |
-| `refactor` | Behavior-preserving code change |
-| `test` | Tests and test fixtures only |
-| `build` | Dependencies, `package.json`, bundler, build config |
-| `ci` | Workflow and pipeline files |
-| `chore` | Anything else (tooling, editor config, housekeeping) |
+<body: why the change was needed>
 
-If a change spans several types, prefer splitting the commit. Otherwise pick the type of the dominant change.
+BREAKING CHANGE: <description>
+Refs: #123
+```
 
-## Scope
-
-- Use the name of the affected project or package (for example `feat(api):`).
-- Use `repo` for root-level or workspace-wide changes.
-- Omit the scope rather than inventing a new one.
+One blank line between parts. Summary and body are mandatory; scope and footer are optional.
 
 ## Summary
 
 - Imperative mood: `add`, not `added` or `adds`.
-- Lowercase, no trailing period.
-- Maximum 50 characters, including the type and scope.
-- Keep issue or ticket IDs out of the summary; they belong in the footer.
+- One action only. Never join facets with "and" — that is the usual reason a header overruns.
+- No trailing period, no issue IDs.
+- Drop the scope when the summary needs the room; it buys back up to 12 characters.
 
 ## Body
 
-- Explain why: context, intent, impact. Never just restate the diff.
-- Write prose only. Never use bullet lists, dashes, numbered lists, or per-file change summaries.
-- Wrap every line at 72 characters.
-- Use a blank line between paragraphs when more than one is needed.
+- Explain **why**: the problem that prompted the change and what it cost. Never narrate the diff.
+- **Descriptive, not imperative.** Begin every sentence with a subject — a person, system, or condition — never a bare verb. Write "Generated headers kept overrunning the limit", not "Remove the placeholder line".
+- Generic reasons do not count. "To improve consistency" or "for clarity" fits any commit of the same type; name the actual failure.
+- Prose only. No bullet lists, numbered lists, or per-file summaries.
+
+## Type
+
+| Type       | Use for                                              |
+| ---------- | ---------------------------------------------------- |
+| `feat`     | New user-facing capability                           |
+| `fix`      | Correcting broken behavior                           |
+| `docs`     | Markdown, ADRs, comments only                        |
+| `refactor` | Behavior-preserving code change                      |
+| `test`     | Tests and test fixtures only                         |
+| `build`    | Dependencies, `package.json`, bundler, build config  |
+| `ci`       | Workflow and pipeline files                          |
+| `chore`    | Anything else (tooling, editor config, housekeeping) |
+
+If a change spans several types, split the commit; otherwise pick the dominant one.
+
+## Scope
+
+Use `gui-client`, `gui-server`, or `repo` for workspace-wide changes. Omit the scope rather than inventing a new one.
 
 ## Footer
 
-- Omit the footer section entirely when there is nothing real to include. Never add placeholder lines such as "No issue references" or "No breaking changes".
-- Include only when the information is real and known.
-- Breaking change: add `!` after the type/scope **and** a `BREAKING CHANGE: <description>` line. The prefix must be uppercase.
-- Issue references: `Refs: #123` or `Closes: #123`. The value must be a GitHub issue number in `#123` form.
-- Never reference ADRs, documents, or file paths in the footer.
-- Never invent issue numbers or ticket IDs.
-- Never add co-author trailers or AI/tool attribution. This is a single-maintainer project.
+Include only real, known information. Never invent issue numbers, never reference ADRs or file paths, and never add co-author or AI attribution trailers — this is a single-maintainer project. A breaking change needs `!` after the type/scope and an uppercase `BREAKING CHANGE:` line. Issue references are `Refs: #123` or `Closes: #123`.
 
-## Good Examples
+## Examples
 
-```text
-docs: add architecture decision log template
-
-Create a reusable ADR template so new decisions are captured with
-consistent context, decision, and consequence sections. This keeps
-records easy to scan and reduces ambiguity in future discussions.
-```
+The usual shape, ending after the body:
 
 ```text
 chore(repo): initialize workspace scaffolding
 
-Set up the base project structure so contributors get identical
-tooling behavior regardless of their local machine or OS. Shared
-editor and line-ending settings prevent noisy whitespace diffs
-between environments.
+Contributors were seeing different tooling behavior depending on
+the machine and OS they worked from, and mismatched editor
+settings produced noisy whitespace diffs on every review.
 ```
 
+A footer only because there is a real break and a real issue:
+
 ```text
-feat(api): add issue search filter by status
+refactor(gui-server)!: drop legacy token parser
 
-Support filtering by status to reduce manual triage in the
-dashboard and make issue review faster for maintainers.
+Two auth paths were validating tokens differently, so a token the
+legacy parser accepted could still be rejected by the current one.
 
+BREAKING CHANGE: remove support for legacy auth tokens
 Refs: #123
 ```
 
-```text
-refactor(auth)!: remove legacy token parser
+## Rejected
 
-Drop the legacy parser to reduce duplicate auth paths and prevent
-inconsistent validation behavior between old and new token formats.
+- `feat(repo): add commitlint rule to remove placeholder footers` — seven words, 60 characters. Use `feat(repo): reject placeholder footers`.
+- `feat(repo): implement ESLint auto-fix hook and update configurations` — over length, joins two facets with "and", and `ESLint` carries capitals. Use `feat(repo): add eslint auto-fix hook`.
+- `fix: stuff.` — vague, trailing period, no body.
+- A body ending `No issue references.` — states an absence. Delete the line and end after the body.
+- A body reading `Omit placeholder lines when there are no references.` — imperative, and it repeats the rule the commit added instead of the reason for it.
+- A body that is a bullet list of changed files — use prose explaining why.
 
-BREAKING CHANGE: remove support for legacy auth tokens
+## Verify
+
+Check the draft mechanically rather than trusting a visual count:
+
+```bash
+npx commitlint --config commitlint.config.js <<'EOF'
+<the full draft message>
+EOF
 ```
 
-## Bad Examples
-
-```text
-Added new API endpoints
-```
-
-No type and not lowercase imperative. Fix: `feat(api): add issue search endpoints`, plus a body explaining why.
-
-```text
-fix: stuff.
-```
-
-Vague summary, trailing period, no body. Fix: name the broken behavior and explain the impact of the fix.
-
-```text
-feat: add a summary line that runs well past fifty characters
-```
-
-Summary exceeds the 50-char maximum. Fix: shorten the summary and move the detail into the body.
-
-```text
-refactor(ui): move button component
-
-Moved button.tsx to components/common and updated imports.
-```
-
-Body restates the diff. Fix: explain why the move was needed, such as sharing the component across features.
-
-```text
-docs: add commit message guidelines
-
-Establish a standardized format for commit messages.
-
-- Added commit message instructions in .github/instructions
-- Created ADR-0001 to document the decision
-```
-
-Body uses a bullet list of changed files. Fix: drop the list and explain in prose why the standard was introduced.
-
-```text
-feat(api): rename issue endpoint
-
-Simplify route naming.
-
-breaking change: renamed /v1/issues to /v2/issues
-```
-
-Missing the `!` marker and the footer prefix is lowercase. Fix: `feat(api)!:` with `BREAKING CHANGE: rename /v1/issues to /v2/issues`.
+Silence means it passes. `.husky/commit-msg` runs the same check at commit time.
