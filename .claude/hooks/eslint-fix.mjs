@@ -16,8 +16,8 @@
  * Autofixable problems are fixed silently. Anything left is written to stderr
  * with exit 2, the code Claude Code feeds back to the agent, so violations that
  * `--fix` cannot repair — `no-explicit-any`, `require-await`, module boundaries —
- * get corrected in the turn that introduced them instead of at commit time.
- * This does not replace `.husky/pre-commit`: the hook sees one file and can be
+ * get corrected in the turn that introduced them instead of at push time.
+ * This does not replace `.husky/pre-push`: the hook sees one file and can be
  * skipped by editing outside Claude Code, so `nx run-many -t lint` remains the
  * gate. It shortens the feedback loop; it does not own enforcement.
  *

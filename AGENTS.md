@@ -20,7 +20,7 @@ npx nx run-many -t build
 npx prettier --check .
 ```
 
-`.husky/pre-commit` runs Prettier over staged files and then `nx run-many -t lint`. A commit that breaks lint is rejected.
+`.husky/pre-commit` runs Prettier over staged files, reformatting them in place rather than failing the commit. Lint runs on `.husky/pre-push`, so a change that breaks lint blocks the push rather than the commit.
 
 ## Typing Rules
 
