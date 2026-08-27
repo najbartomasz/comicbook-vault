@@ -9,5 +9,4 @@ Modern Copilot surfaces read `AGENTS.md` natively. This file is kept for surface
 If you cannot read `AGENTS.md`, the three rules most likely to cause a broken commit are:
 
 - Lint is type-aware at `strictTypeChecked` — no `any`, no floating promises, `??` over `||`, and `async` without `await` is an error.
-- Server code has no DOM. `document` and `window` do not compile in `gui-server`.
 - Verify with `npx nx run-many -t lint` before finishing. `.husky/pre-commit` runs it and rejects the commit on failure.

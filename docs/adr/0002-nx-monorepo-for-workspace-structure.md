@@ -1,4 +1,4 @@
-# ADR-0002: Use Nx Monorepo
+# ADR-0002: Nx Monorepo for Workspace Structure
 
 **Date**: 2026-08-03
 **Status**: Accepted

@@ -4,17 +4,6 @@ Instructions for AI coding agents working in `comicbook-vault`. This is the sing
 
 Copilot and Cursor read this file natively. Claude Code reads only `CLAUDE.md`, so the root `CLAUDE.md` is a one-line `@AGENTS.md` import — add Claude-specific instructions below that import rather than here. `.github/copilot-instructions.md` is a pointer for surfaces that look only for that path.
 
-## Workspace Shape
-
-An Nx monorepo with two applications and no libraries yet.
-
-| Project      | Path              | Stack                            | Test runner |
-| ------------ | ----------------- | -------------------------------- | ----------- |
-| `gui-client` | `apps/gui/client` | Angular 22, standalone, `OnPush` | Vitest      |
-| `gui-server` | `apps/gui/server` | NestJS 11                        | Jest        |
-
-`gui-server` serves the `gui-client` bundle and owns the API under the `api` prefix. The two are coupled through build configuration only, with no source imports between them. See [ADR-0003](docs/adr/0003-serve-gui-client-from-nestjs-bff.md).
-
 ## Verification
 
 Run this before claiming any change is complete:
@@ -49,15 +38,6 @@ The workspace lints at `strictTypeChecked` + `stylisticTypeChecked`. These are n
 - **Optional properties are exact.** `exactOptionalPropertyTypes` is on, so `{ a?: string }` does not accept `{ a: undefined }`.
 
 `eslint-disable` comments must be justified in a comment and must be necessary — `reportUnusedDisableDirectives` is an error, so a stale disable fails the build.
-
-## Project-Specific Rules
-
-- **Server code has no DOM.** `tsconfig.base.json` sets `lib: ["es2022"]` and only the client adds `dom`. Referencing `document`, `window`, or `Window` in `gui-server` fails to compile. This is intentional: the BFF runs on Node.
-- **Angular templates are linted for accessibility.** 11 `templateAccessibility` rules are active. Interactive elements need keyboard handlers and focusability; images need text alternatives.
-- **Angular components** are standalone with `ChangeDetectionStrategy.OnPush`, use `inject()` over constructor injection, and use `app` selector prefixes.
-- **Server specs are linted by `eslint-plugin-jest`.** A committed `describe.only` or `fit` fails lint. Client specs are Vitest and have no equivalent check, so do not leave focused tests there either.
-- **`*.module.ts`** is exempt from `no-extraneous-class`. No other file is.
-- **Cross-project imports are constrained.** `type:app` may only depend on `type:lib`, so `gui-client` and `gui-server` cannot import from each other. Shared code belongs in a new library.
 
 ## Formatting
 
